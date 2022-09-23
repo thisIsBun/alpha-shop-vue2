@@ -4,7 +4,9 @@
     <main>
 
       <!-- Main Stepper -->
-      <MainStepper />
+      <Stepper
+      :currentStep="currentStep" 
+      />
 
       <section class="main__form">
         <form
@@ -20,13 +22,14 @@
                   <select
                     name=""
                     id=""
+                    v-model="form.salutation"
                   >
                     <option
-                      value=""
+                      value="先生"
                       selected
                     >先生</option>
-                    <option value="">小姐</option>
-                    <option value="">其他</option>
+                    <option value="小姐">小姐</option>
+                    <option value="其他">其他</option>
                   </select>
                 </div>
               </div>
@@ -35,6 +38,7 @@
                 <input
                   type="text"
                   placeholder="請輸入姓名"
+                  v-model="form.name"
                 >
               </div>
               <div class="form-row phone">
@@ -42,6 +46,7 @@
                 <input
                   type="text"
                   placeholder="請輸入行動電話"
+                  v-model="form.phone"
                 >
               </div>
               <div class="form-row email">
@@ -49,6 +54,7 @@
                 <input
                   type="text"
                   placeholder="請輸入電子郵件"
+                  v-model="form.email"
                 >
               </div>
               <div class="form-row city">
@@ -58,16 +64,17 @@
                     name=""
                     id=""
                     required
+                    v-model="form.city"
                   >
                     <option
                       value=""
                       disabled
                       selected
                     >請選擇縣市</option>
-                    <option value="">台北市</option>
-                    <option value="">新北市</option>
-                    <option value="">台中市</option>
-                    <option value="">嘉義縣</option>
+                    <option value="台北市">台北市</option>
+                    <option value="新北市">新北市</option>
+                    <option value="台中市">台中市</option>
+                    <option value="嘉義縣">嘉義縣</option>
                   </select>
                 </div>
               </div>
@@ -76,6 +83,7 @@
                 <input
                   type="text"
                   placeholder="請輸入地址"
+                  v-model="form.address"
                 >
               </div>
             </div>
@@ -85,12 +93,13 @@
       </section>
 
       <!-- Main Cart -->
-      <MainCart />
+      <Cart
+      />
 
       <!-- Main Button -->
-      <MainButton
+      <Buttons
       :initialStep="currentStep" 
-      @emitStepChange="changeStep"
+      @emitStepChange="handleStepChange"
       />
 
     </main>
@@ -98,25 +107,50 @@
 </template>
 
 <script>
-import MainStepper from '../components/MainStepper.vue'
-import MainCart from '../components/MainCart.vue'
-import MainButton from '../components/MainButton.vue'
+import Stepper from '../components/Stepper.vue'
+import Cart from '../components/Cart.vue'
+import Buttons from '../components/Button.vue'
 
+const STORAGE_KEY = 'form-info'
 
 export default {
   components: {
-    MainStepper,
-    MainButton,
-    MainCart,
+    Stepper,
+    Buttons,
+    Cart,
   },
   data () {
     return {
-      currentStep: 1
+      currentStep: 1,
+      form: {
+        salutation: '先生',
+        name: '',
+        phone: '',
+        email: '',
+        city: '',
+        address: ''
+      },
     }
   },
+  created () {
+    this.form = JSON.parse(localStorage.getItem(STORAGE_KEY)) || this.form
+  },
   methods: {
-    changeStep (stepNum) {
+    handleStepChange (stepNum) {
       this.currentStep = stepNum
+
+      // 當 currentStep為 2時，更改到 Step2路由
+      if (this.currentStep === 2) {
+        this.$router.push({ name: 'Step2' })
+      }
+    }
+  },
+  watch: {
+    form: {
+      handler () {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.form))
+      },
+      deep: true
     }
   }
 }

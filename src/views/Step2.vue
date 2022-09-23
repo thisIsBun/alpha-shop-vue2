@@ -2,7 +2,7 @@
   <div class="app-container">
     <h1 class="app__title">結帳</h1>
     <main>
-      <MainStepper />
+      <Stepper />
       <section class="main__form">
         <form
           action="#"
@@ -45,23 +45,28 @@
 
         </form>
       </section>
-      <MainCart />
-      <MainButton />
+      <Cart />
+      <Buttons />
     </main>
   </div>
 </template>
 
 <script>
-import MainStepper from '../components/MainStepper.vue'
-import MainCart from '../components/MainCart.vue'
-import MainButton from '../components/MainButton.vue'
+import Stepper from '../components/Stepper.vue'
+import Cart from '../components/Cart.vue'
+import Buttons from '../components/Button.vue'
 
 
 export default {
   components: {
-    MainStepper,
-    MainButton,
-    MainCart,
+    Stepper,
+    Buttons,
+    Cart,
+  },
+  data () {
+    return {
+      
+    }
   }
 }
 </script>

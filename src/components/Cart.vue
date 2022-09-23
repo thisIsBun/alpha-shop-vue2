@@ -16,9 +16,15 @@
         <div class="product__info">
           <div class="product__info__name">{{product.name}}</div>
           <div class="product__info__count d-flex justify-content-between align-items-center">
-            <div class="count__icon minus"></div>
+            <div 
+            class="count__icon minus"
+            @click.stop.prevent="minusCount(product)"
+            ></div>
             <span class="count__number count">{{product.count}}</span>
-            <div class="count__icon plus"></div>
+            <div 
+            class="count__icon plus"
+            @click.stop.prevent="plusCount(product)"
+            ></div>
           </div>
           <div class="product__info__price price_1">{{product.price | formatNumber}}</div>
         </div>
@@ -31,12 +37,14 @@
     </div>
     <div class="cart__total justify-content-between">
       <span class="cart__subtitle">小計</span>
-      <span class="amount total__amount">$5,298</span>
+      <span class="amount total__amount">{{calTotalAmount | formatNumber}}</span>
     </div>
   </section>
 </template>
 
 <script>
+
+const STORAGE_KEY = 'cart-info'
 
 const dummyProduct = {
   products: [
@@ -45,12 +53,14 @@ const dummyProduct = {
       name: '破壞補丁修身牛仔褲',
       price: 3999,
       image: 'https://i.postimg.cc/YCKWsfqN/Photo-2x-product1.png',
+      count: 1
     },
     {
       id: 2,
       name: '刷色直筒牛仔褲',
       price: 1299,
       image: 'https://i.postimg.cc/0y00GHdK/Photo-2x-product2.png',
+      count: 1
     }
   ]
 }
@@ -62,21 +72,39 @@ export default {
     }
   },
   created () {
-    this.fetchProducts()
+    this.products = JSON.parse(localStorage.getItem(STORAGE_KEY)) || dummyProduct.products
   },
   methods: {
-    fetchProducts () {
-      this.products = dummyProduct.products.map(product => {
-        return {
-          ...product,
-          count: 1,
-        }
-      })
+    minusCount (product) {
+      if (product.count === 0) {
+        return
+      }
+      product.count -= 1
+    },
+    plusCount(product) {
+      product.count += 1
     }
   },
   filters: {
     formatNumber (num) {
       return `$${num.toLocaleString("eu-US")}`
+    }
+  },
+  computed: {
+    calTotalAmount() {
+      let totalAmount = 0
+      for (const product of this.products) {
+        totalAmount += product.count * product.price
+      }
+      return totalAmount
+    }
+  },
+  watch: {
+    products: {
+      handler () {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.products))
+      },
+      deep: true
     }
   }
 }
