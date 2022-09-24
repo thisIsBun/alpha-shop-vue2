@@ -134,7 +134,7 @@ export default {
         ccName: '',
         ccNumber: '',
         ccExpireDate: '',
-        ccCvv: ''
+        ccCvc: ''
       },
     }
   },

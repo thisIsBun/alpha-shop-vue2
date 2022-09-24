@@ -33,7 +33,7 @@
     </div>
     <div class="cart__total justify-content-between">
       <span class="cart__subtitle">運費</span>
-      <span class="amount freight__amount">免費</span>
+      <span class="amount freight__amount">{{shippingFee === 0 ? '免費' : '$500'}}</span>
     </div>
     <div class="cart__total justify-content-between">
       <span class="cart__subtitle">小計</span>
@@ -43,9 +43,9 @@
 </template>
 
 <script>
+import { formatNumberFilters } from '../utils/mixins.js'
 
 const STORAGE_KEY = 'cart-info'
-
 const dummyProducts = [
     {
       id: 1,
@@ -64,6 +64,7 @@ const dummyProducts = [
   ]
 
 export default {
+  mixins: [formatNumberFilters],
   props: {
     shippingFee: {
       type: Number,
@@ -89,11 +90,6 @@ export default {
       product.count += 1
     }
   },
-  filters: {
-    formatNumber (num) {
-      return `$${num.toLocaleString("eu-US")}`
-    }
-  },
   computed: {
     calTotalAmount() {
 
@@ -101,6 +97,7 @@ export default {
       for (const product of this.products) {
         totalAmount += product.count * product.price
       }
+      this.$emit('emitTotalAmount', totalAmount)
       return totalAmount
     }
   },

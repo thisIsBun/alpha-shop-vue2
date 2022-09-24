@@ -101,12 +101,12 @@ export default {
         ccName: '',
         ccNumber: '',
         ccExpireDate: '',
-        ccCvv: ''
+        ccCvc: ''
       },
     }
   },
   created () {
-    this.form = JSON.parse(localStorage.getItem(STORAGE_KEY))
+    this.form = JSON.parse(localStorage.getItem(STORAGE_KEY)) || this.form
     this.fetchShippingMethod()
   },
   methods: {

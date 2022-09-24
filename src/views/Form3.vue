@@ -43,7 +43,7 @@
                 <input
                   type="text"
                   placeholder="123"
-                  v-model="form.ccCvv"
+                  v-model="form.ccCvc"
                 >
               </div>
             </div>
@@ -53,10 +53,17 @@
       </section>
       <Cart 
       :shippingFee="form.shippingFee"
+      @emitTotalAmount="handleTotalAmount"
       />
       <Buttons
       :initialStep="currentStep"
       @emitStepChange="handleStepChange"
+      />
+      <Modal 
+      v-if="currentStep === 4"
+      :totalAmount="totalAmount"
+      @confirmOrder="handleConfirmOrder"
+      @cancelOrder="handleCancelOrder"
       />
     </main>
   </div>
@@ -66,6 +73,7 @@
 import Stepper from '../components/Stepper.vue'
 import Cart from '../components/Cart.vue'
 import Buttons from '../components/Button.vue'
+import Modal from '../components/Modal.vue'
 
 const STORAGE_KEY = 'form-info' 
 
@@ -74,6 +82,7 @@ export default {
     Stepper,
     Buttons,
     Cart,
+    Modal
   },
   data() {
     return {
@@ -89,12 +98,13 @@ export default {
         ccName: '',
         ccNumber: '',
         ccExpireDate: '',
-        ccCvv: ''
+        ccCvc: ''
       },
+      totalAmount: ''
     }
   },
   created () {
-    this.form = JSON.parse(localStorage.getItem(STORAGE_KEY))
+    this.form = JSON.parse(localStorage.getItem(STORAGE_KEY)) || this.form
   },
   methods: {
     handleStepChange (stepNum) {
@@ -103,10 +113,22 @@ export default {
         this.$router.push({ name: 'Form2' })
       }
     },
+    handleTotalAmount (amount) {
+      this.totalAmount = amount
+    },
+    handleConfirmOrder () {
+      this.currentStep = 1
+      this.$router.push({ name: 'Form1' })
+    },
+    handleCancelOrder () {
+      this.currentStep = 1
+      localStorage.clear()
+      this.$router.push({ name: 'Form1' })
+    }
   },
   watch: {
     form: {
-      handler() {
+      handler () {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.form))
       },
       deep: true

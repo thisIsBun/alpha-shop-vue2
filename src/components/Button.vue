@@ -5,8 +5,10 @@
     class="main__button__next"
     @click.stop.prevent="changeNextStep"
     >
-      {{currentStep === 3 ? '確認下單' : '下一步'}}
-      <span></span>
+      {{currentStep === 3 || currentStep === 4 ? '確認下單' : '下一步'}}
+      <span
+      v-show="currentStep === 1 || currentStep === 2"
+      ></span>
     </button>
 
     <button 
@@ -36,7 +38,7 @@ export default {
   methods: {
     changeNextStep () {
 
-      if (this.currentStep === 3) return
+      if (this.currentStep === 4) return
 
       this.currentStep += 1
       this.$emit('emitStepChange', this.currentStep)
