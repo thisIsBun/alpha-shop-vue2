@@ -56,6 +56,7 @@
 import Stepper from '../components/Stepper.vue'
 import Cart from '../components/Cart.vue'
 import Buttons from '../components/Button.vue'
+import { formWatch } from '../utils/mixins'
 
 const STORAGE_KEY = 'form-info' 
 
@@ -81,6 +82,7 @@ const dummyShippingMethod = [
 ]
 
 export default {
+  mixins: [formWatch],
   components: {
     Stepper,
     Buttons,
@@ -121,14 +123,6 @@ export default {
     fetchShippingMethod () {
       this.shippingMethods = dummyShippingMethod
     }
-  },
-  watch: {
-    form: {
-      handler () {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.form))
-      },
-      deep: true
-    },
   },
 }
 </script>

@@ -74,10 +74,12 @@ import Stepper from '../components/Stepper.vue'
 import Cart from '../components/Cart.vue'
 import Buttons from '../components/Button.vue'
 import Modal from '../components/Modal.vue'
+import { formWatch } from '../utils/mixins'
 
 const STORAGE_KEY = 'form-info' 
 
 export default {
+  mixins: [formWatch],
   components: {
     Stepper,
     Buttons,
@@ -125,14 +127,6 @@ export default {
       localStorage.clear()
       this.$router.push({ name: 'Form1' })
     }
-  },
-  watch: {
-    form: {
-      handler () {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.form))
-      },
-      deep: true
-    },
   },
 }
 </script>
