@@ -2,7 +2,9 @@
   <div class="app-container">
     <h1 class="app__title">結帳</h1>
     <main>
-      <Stepper />
+      <Stepper 
+      :currentStep="currentStep"
+      />
       <section class="main__form">
         <form
           action="#"
@@ -17,6 +19,7 @@
                 <input
                   type="text"
                   placeholder="John Doe"
+                  v-model="form.ccName"
                 >
               </div>
               <div class="form-row cardnumber">
@@ -24,6 +27,7 @@
                 <input
                   type="text"
                   placeholder="1111 2222 3333 4444"
+                  v-model="form.ccNumber"
                 >
               </div>
               <div class="form-row cardexpire">
@@ -31,6 +35,7 @@
                 <input
                   type="text"
                   placeholder="MM/YY"
+                  v-model="form.ccExpireDate"
                 >
               </div>
               <div class="form-row cardcvc">
@@ -38,6 +43,7 @@
                 <input
                   type="text"
                   placeholder="123"
+                  v-model="form.ccCvv"
                 >
               </div>
             </div>
@@ -45,8 +51,13 @@
 
         </form>
       </section>
-      <Cart />
-      <Buttons />
+      <Cart 
+      :shippingFee="form.shippingFee"
+      />
+      <Buttons
+      :initialStep="currentStep"
+      @emitStepChange="handleStepChange"
+      />
     </main>
   </div>
 </template>
@@ -56,11 +67,50 @@ import Stepper from '../components/Stepper.vue'
 import Cart from '../components/Cart.vue'
 import Buttons from '../components/Button.vue'
 
+const STORAGE_KEY = 'form-info' 
+
 export default {
   components: {
     Stepper,
     Buttons,
     Cart,
-  }
+  },
+  data() {
+    return {
+      currentStep: 3,
+      form: {
+        salutation: '先生', //預設 選取先生
+        name: '',
+        phone: '',
+        email: '',
+        city: '',
+        address: '',
+        shippingFee: 0, //預設 標準運送
+        ccName: '',
+        ccNumber: '',
+        ccExpireDate: '',
+        ccCvv: ''
+      },
+    }
+  },
+  created () {
+    this.form = JSON.parse(localStorage.getItem(STORAGE_KEY))
+  },
+  methods: {
+    handleStepChange (stepNum) {
+      this.currentStep = stepNum
+      if (this.currentStep === 2) {
+        this.$router.push({ name: 'Form2' })
+      }
+    },
+  },
+  watch: {
+    form: {
+      handler() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.form))
+      },
+      deep: true
+    },
+  },
 }
 </script>

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import NotFound from '../views/NotFound.vue'
-import Step1 from '../views/Step1.vue'
+import Form1 from '../views/Form1.vue'
 
 
 Vue.use(VueRouter)
@@ -15,19 +15,19 @@ const routes = [
   },
   {
     path: '/1',
-    name: 'Step1',
-    component: Step1
+    name: 'Form1',
+    component: Form1
   },
   {
     path: '/2',
-    name: 'Step2',
-    component: () => import ('../views/Step2.vue')
+    name: 'Form2',
+    component: () => import ('../views/Form2.vue')
   },
   {
     path: '/3',
-    name: 'Step3',
+    name: 'Form3',
     component: function () {
-      return import ('../views/Step3.vue')
+      return import ('../views/Form3.vue')
     }
   },
   {

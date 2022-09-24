@@ -113,9 +113,9 @@ export default {
     handleStepChange(stepNum) {
       this.currentStep = stepNum
       if (this.currentStep === 3) {
-        this.$router.push({ name: 'Step3' })
+        this.$router.push({ name: 'Form3' })
       } else if (this.currentStep === 1) {
-        this.$router.push({ name: 'Step1' })
+        this.$router.push({ name: 'Form1' })
       }
     },
     fetchShippingMethod () {

@@ -94,6 +94,7 @@
 
       <!-- Main Cart -->
       <Cart
+      :shippingFee="form.shippingFee"
       />
 
       <!-- Main Button -->
@@ -144,9 +145,9 @@ export default {
     handleStepChange (stepNum) {
       this.currentStep = stepNum
 
-      // 當 currentStep為 2時，更改到 Step2路由
+      // 當 currentStep為 2時，更改到 Form2路由
       if (this.currentStep === 2) {
-        this.$router.push({ name: 'Step2' })
+        this.$router.push({ name: 'Form2' })
       }
     }
   },
