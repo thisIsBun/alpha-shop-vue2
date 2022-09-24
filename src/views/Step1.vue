@@ -123,12 +123,17 @@ export default {
     return {
       currentStep: 1,
       form: {
-        salutation: '先生',
+        salutation: '先生', //預設 選取先生
         name: '',
         phone: '',
         email: '',
         city: '',
-        address: ''
+        address: '',
+        shippingFee: 0, //預設 標準運送
+        ccName: '',
+        ccNumber: '',
+        ccExpireDate: '',
+        ccCvv: ''
       },
     }
   },

@@ -48,26 +48,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.modal {
-  position: fixed;
-  z-index: 999;
-  top: 20%;
-  left: 50%;
-  width: 300px;
-  margin-left: -150px;
-  background: #ccc;
-}
-</style>
-
-<!-- <template>
-  <section class="main__button">
-    <button class="main__button__next">
-      下一步<span></span>
-    </button>
-    <button class="main__button__previous">
-      <span></span>上一步
-    </button>
-  </section>
-</template> -->

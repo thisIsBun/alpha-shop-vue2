@@ -46,8 +46,7 @@
 
 const STORAGE_KEY = 'cart-info'
 
-const dummyProduct = {
-  products: [
+const dummyProducts = [
     {
       id: 1,
       name: '破壞補丁修身牛仔褲',
@@ -63,16 +62,21 @@ const dummyProduct = {
       count: 1
     }
   ]
-}
 
 export default {
+  props: {
+    shippingFee: {
+      type: Number,
+      required: true
+    }
+  },
   data () {
     return {
       products: [],
     }
   },
   created () {
-    this.products = JSON.parse(localStorage.getItem(STORAGE_KEY)) || dummyProduct.products
+    this.products = JSON.parse(localStorage.getItem(STORAGE_KEY)) || dummyProducts
   },
   methods: {
     minusCount (product) {
@@ -92,7 +96,8 @@ export default {
   },
   computed: {
     calTotalAmount() {
-      let totalAmount = 0
+
+      let totalAmount = this.shippingFee
       for (const product of this.products) {
         totalAmount += product.count * product.price
       }

@@ -272,7 +272,7 @@ main {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        align-items: end;
+        align-items: flex-end;
 
         .product__info__count {
           width: 31vw;
@@ -320,7 +320,7 @@ main {
     .cart__total {
       font-size: 14px;
       display: flex;
-      align-items: end;
+      align-items: flex-end;
       border-top: 1px solid var(--cart-border);
       margin-top: 1rem;
       width: 100%;
