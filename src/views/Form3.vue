@@ -119,11 +119,16 @@ export default {
       this.totalAmount = amount
     },
     handleConfirmOrder () {
-      this.currentStep = 1
-      this.$router.push({ name: 'Form1' })
+      this.currentStep = 3
+
+      // 目前路由已經在 Form3了，不能再設定相同路由，主控台會跳出路由重複的錯誤訊息
+      // this.$router.push({ name: 'Form3' }) 
     },
     handleCancelOrder () {
-      this.currentStep = 1
+
+      // 這裡不用再設定，因為 currentStep在每個 view是獨立的 data，跳到 Form1，currentStep就會以 Form1的 data為主
+      // this.currentStep = 1
+
       localStorage.clear()
       this.$router.push({ name: 'Form1' })
     }

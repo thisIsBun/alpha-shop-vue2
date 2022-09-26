@@ -35,6 +35,15 @@ export default {
       currentStep: this.initialStep,
     }
   },
+  watch: {
+    initialStep: {
+      handler(e) {
+        console.log(e)
+        this.currentStep = e
+      },
+      deep: true
+    }
+  },
   methods: {
     changeNextStep () {
 
