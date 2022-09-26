@@ -41,7 +41,7 @@ export default {
         console.log(e)
         this.currentStep = e
       },
-      deep: true
+      // deep: true
     }
   },
   methods: {
